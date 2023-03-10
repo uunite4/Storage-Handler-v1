@@ -164,6 +164,22 @@ nav {
 	transition: 200ms;
 }
 
+.item-dele-btn {
+	position: absolute;
+	right: 5%;
+	bottom: 5%;
+	background-color: #d8817b;
+	padding: 0.3rem;
+	border-radius: 5px;
+
+	cursor: pointer;
+
+	color: #d41b0e;
+	font-weight: 700;
+
+	transition: 200ms;
+}
+
 .item-props {
 	background-color: #a5dbe9;
 	flex: auto;
@@ -191,9 +207,14 @@ nav {
 	height: 130%;
 }
 
-.item:hover .item-edit-btn {
+.item-edit-btn:hover {
 	background-color: #8fd6e7;
 	color: #088eaf;
+}
+
+.item-dele-btn:hover {
+	background-color: #d4564d;
+	color: #c91e12;
 }
 
 .item:hover .item-props {
@@ -269,7 +290,6 @@ nav {
 }
 
 .add-item-img-cont {
-	/* position: relative; */
 	width: 30%;
 	aspect-ratio: 1 / 1;
 	background-color: #1a1a1a;

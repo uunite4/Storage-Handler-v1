@@ -76,6 +76,11 @@ export default function App() {
 		}
 	}
 
+	// DELETE ITEM
+	function DeleteItem(id) {
+		setItems((prev) => prev.filter((item) => item.id !== id))
+	}
+
 	return (
 		<>
 			<Nav backToMain={BackToMain} />
@@ -83,7 +88,7 @@ export default function App() {
 				<>
 					<Search />
 					<div className='seperator'></div>
-					<Main items={shownItems} addItem={AddPage} />
+					<Main delItem={DeleteItem} items={shownItems} addItem={AddPage} />
 				</>
 			)}
 			{page == 'Add' && (

@@ -6,6 +6,9 @@ export default function Item(props) {
 			<div className='item-img'>
 				<img src={props.img} alt='' />
 				<span className='item-edit-btn'>EDIT</span>
+				<span onClick={() => props.delItem(props.id)} className='item-dele-btn'>
+					DELETE
+				</span>
 			</div>
 			<div className='item-props'>
 				<p className='item-name'>
