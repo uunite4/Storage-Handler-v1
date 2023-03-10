@@ -6,22 +6,36 @@ export default function Add(props) {
 			<span className='add-item-title'>ADD ITEM</span>
 			<section className='add-item-main'>
 				<div className='add-item-img-cont'>
-					<img
-						src='https://images.unsplash.com/photo-1585997631913-896180ae8acb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
-						alt=''
-					/>
+					<img src={props.newItemState.img} alt='' />
 					<label htmlFor='select-img'>CHANGE IMAGE</label>
-					<input id='select-img' type='file' />
+					<input
+						name='img'
+						id='select-img'
+						type='file'
+						onChange={props.handleChange}
+					/>
 				</div>
 				<form className='add-item-form'>
 					<section className='add-item-section'>
 						<label htmlFor='add-item-name'>NAME: </label>
-						<input id='add-item-name' type='text' />
+						<input
+							name='name'
+							id='add-item-name'
+							type='text'
+							value={props.newItemState.name}
+							onChange={props.handleChange}
+						/>
 					</section>
 
 					<section className='add-item-section'>
 						<label htmlFor='add-item-name'>TYPE: </label>
-						<input id='add-item-name' type='text' />
+						<input
+							name='type'
+							id='add-item-name'
+							type='text'
+							value={props.newItemState.type}
+							onChange={props.handleChange}
+						/>
 						{/* ADD FUNCTIONALITY FOR TYPE INPUT:
             the type input should be a dropdown with all
             the types that already exsits, there should be an option
@@ -32,10 +46,16 @@ export default function Add(props) {
 
 					<section className='add-item-section'>
 						<label htmlFor='add-item-name'>COUNT: </label>
-						<input id='add-item-name' type='number' />
+						<input
+							name='count'
+							id='add-item-name'
+							type='number'
+							value={props.newItemState.count}
+							onChange={props.handleChange}
+						/>
 					</section>
 
-					<input type='submit' value='ADD ITEM' />
+					<input onClick={props.submitFunc} type='submit' value='ADD ITEM' />
 				</form>
 			</section>
 
