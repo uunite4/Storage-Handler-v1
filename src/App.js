@@ -19,6 +19,7 @@ export default function App() {
 		type: '',
 		count: 0,
 	})
+	const [actionBtns, setActionBtns] = useState(true)
 
 	//EVERY TIME items IS CHANGED, SHOWD ITEMS SHOULD CHANGE TOO
 	useEffect(() => {
@@ -81,14 +82,28 @@ export default function App() {
 		setItems((prev) => prev.filter((item) => item.id !== id))
 	}
 
+	// TOGGLE ACTION BUTTONS
+	function ToggleActionBtns() {
+		setActionBtns((prev) => !prev)
+	}
+
 	return (
 		<>
-			<Nav backToMain={BackToMain} />
+			<Nav
+				toggleAction={ToggleActionBtns}
+				backToMain={BackToMain}
+				showAction={actionBtns}
+			/>
 			{page == 'Main' && (
 				<>
 					<Search />
 					<div className='seperator'></div>
-					<Main delItem={DeleteItem} items={shownItems} addItem={AddPage} />
+					<Main
+						showAction={actionBtns}
+						delItem={DeleteItem}
+						items={shownItems}
+						addItem={AddPage}
+					/>
 				</>
 			)}
 			{page == 'Add' && (

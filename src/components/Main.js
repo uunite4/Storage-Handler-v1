@@ -14,6 +14,7 @@ export default function Main(props) {
 				key={item.id}
 				id={item.id}
 				delItem={props.delItem}
+				showAction={props.showAction}
 			/>
 		)
 	})

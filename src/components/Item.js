@@ -5,10 +5,19 @@ export default function Item(props) {
 		<div className='item'>
 			<div className='item-img'>
 				<img src={props.img} alt='' />
-				<span className='item-edit-btn'>EDIT</span>
-				<span onClick={() => props.delItem(props.id)} className='item-dele-btn'>
-					DELETE
-				</span>
+				{props.showAction && (
+					<>
+						<span className='item-action item-edit-btn'>EDIT</span>
+						<span
+							onClick={() => props.delItem(props.id)}
+							className='item-action item-dele-btn'
+						>
+							DELETE
+						</span>
+						<span className='item-action item-plus-btn'>+1</span>
+						<span className='item-action item-minus-btn'>-1</span>
+					</>
+				)}
 			</div>
 			<div className='item-props'>
 				<p className='item-name'>
