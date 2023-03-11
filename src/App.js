@@ -77,14 +77,32 @@ export default function App() {
 		}
 	}
 
+	// TOGGLE ACTION BUTTONS
+	function ToggleActionBtns() {
+		setActionBtns((prev) => !prev)
+	}
+
 	// DELETE ITEM
 	function DeleteItem(id) {
 		setItems((prev) => prev.filter((item) => item.id !== id))
 	}
 
-	// TOGGLE ACTION BUTTONS
-	function ToggleActionBtns() {
-		setActionBtns((prev) => !prev)
+	// ADD +1 COUNT
+	function AddCount(id) {
+		setItems((prev) => {
+			return prev.map((item) => {
+				return item.id === id ? { ...item, count: item.count + 1 } : { ...item }
+			})
+		})
+	}
+
+	// ADD -1 COUNT
+	function SubCount(id) {
+		setItems((prev) => {
+			return prev.map((item) => {
+				return item.id === id ? { ...item, count: item.count - 1 } : { ...item }
+			})
+		})
 	}
 
 	return (
@@ -101,6 +119,8 @@ export default function App() {
 					<Main
 						showAction={actionBtns}
 						delItem={DeleteItem}
+						addCount={AddCount}
+						subCount={SubCount}
 						items={shownItems}
 						addItem={AddPage}
 					/>

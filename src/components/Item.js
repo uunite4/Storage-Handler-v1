@@ -14,8 +14,22 @@ export default function Item(props) {
 						>
 							DELETE
 						</span>
-						<span className='item-action item-plus-btn'>+1</span>
-						<span className='item-action item-minus-btn'>-1</span>
+						<span
+							onClick={() => {
+								props.addCount(props.id)
+							}}
+							className='item-action item-plus-btn'
+						>
+							+1
+						</span>
+						<span
+							onClick={() => {
+								props.subCount(props.id)
+							}}
+							className='item-action item-minus-btn'
+						>
+							-1
+						</span>
 					</>
 				)}
 			</div>
