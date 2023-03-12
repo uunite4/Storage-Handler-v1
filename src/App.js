@@ -16,15 +16,35 @@ export default function App() {
 	const [newItem, setNewItem] = useState({
 		img: '',
 		name: '',
-		type: '',
-		count: 0,
+		type: 'General',
+		count: 1,
+		id: nanoid(),
 	})
+	const [newItemDiffType, setNewItemDiffType] = useState(false)
 	const [actionBtns, setActionBtns] = useState(true)
+	const [types, setTypes] = useState(RemoveTypesDuplicates)
 
-	//EVERY TIME items IS CHANGED, SHOWD ITEMS SHOULD CHANGE TOO
+	//EVERY TIME items IS CHANGED, SHOWD ITEMS AND TYPES SHOULD CHANGE TOO
 	useEffect(() => {
 		setShownitems(items)
+		setTypes(RemoveTypesDuplicates())
 	}, [items])
+
+	// TYPES FUNCTIONS
+	function GetAllTypes() {
+		return items.map((item) => {
+			return item.type
+		})
+	}
+
+	function RemoveTypesDuplicates() {
+		let mainTypes = GetAllTypes()
+		mainTypes.unshift('General')
+		let newArr = mainTypes.filter(
+			(type, index) => mainTypes.indexOf(type) === index
+		)
+		return newArr
+	}
 
 	// GENERATE AN ITEM
 	function DefaultItems() {
@@ -59,10 +79,16 @@ export default function App() {
 	//ADD NEW ITEM INPUTS FUNCTION
 	function AddNewItemInputs(e) {
 		const { name, value, type, files } = e.target
-		setNewItem((prev) => ({
-			...prev,
-			[name]: type == 'file' ? URL.createObjectURL(files[0]) : value,
-		}))
+		if (type == 'select-one' && value == 'Other') {
+			//Handle the type feature thing
+			setNewItemDiffType(true)
+			setNewItem((prev) => ({ ...prev, type: '' }))
+		} else {
+			setNewItem((prev) => ({
+				...prev,
+				[name]: type == 'file' ? URL.createObjectURL(files[0]) : value,
+			}))
+		}
 	}
 
 	// ACTUALLY ADD NEW ITEM TO LIST
@@ -70,7 +96,8 @@ export default function App() {
 		e.preventDefault()
 		if (newItem.name && newItem.type && newItem.count > 0) {
 			setItems((prev) => [newItem, ...prev])
-			setNewItem({ img: '', name: '', type: '', count: 0 })
+			setNewItem({ img: '', name: '', type: 'General', count: 1, id: nanoid() })
+			setNewItemDiffType(false)
 			BackToMain()
 		} else {
 			alert('You should have a: name, type and at least one of this new item')
@@ -134,6 +161,8 @@ export default function App() {
 						newItemState={newItem}
 						defPenImg={penImg}
 						submitFunc={SubmitNewItem}
+						typesList={types}
+						otherType={newItemDiffType}
 					/>
 				</>
 			)}

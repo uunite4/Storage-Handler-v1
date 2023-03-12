@@ -414,27 +414,40 @@ nav {
 
 .add-item-form input {
 	font-size: 2rem;
-}
-
-.add-item-form input {
 	background-color: white;
 	outline: none;
 	border: none;
 	padding: 0.2rem;
+
+	width: 100%;
+}
+
+.add-item-form select {
+	font-size: 2rem;
+	background-color: white;
+	outline: none;
+	border: none;
+	padding: 0.2rem;
+
+	width: 100%;
 }
 
 .add-item-form section {
 	display: flex;
 	justify-content: space-between;
+	gap: 2em;
 }
 
 .add-item-form input[type='number'] {
+	font-size: 2rem;
 	width: 30%;
+	text-align: center;
 }
 
 .add-item-form input[type='submit'] {
 	width: fit-content;
 	align-self: center;
+	font-size: 2rem;
 	padding: 0.2em 1em;
 
 	border: none;

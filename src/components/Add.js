@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { nanoid } from 'nanoid'
 
 export default function Add(props) {
+	const typesArray = props.typesList
+
+	const selectOptions = typesArray.map((type) => {
+		return (
+			<option key={nanoid()} value={type}>
+				{type}
+			</option>
+		)
+	})
+
 	return (
 		<section className='add-item'>
 			<span className='add-item-title'>ADD ITEM</span>
@@ -29,25 +40,33 @@ export default function Add(props) {
 
 					<section className='add-item-section'>
 						<label htmlFor='add-item-name'>TYPE: </label>
-						<input
-							name='type'
-							id='add-item-name'
-							type='text'
-							value={props.newItemState.type}
-							onChange={props.handleChange}
-						/>
-						{/* ADD FUNCTIONALITY FOR TYPE INPUT:
-            the type input should be a dropdown with all
-            the types that already exsits, there should be an option
-            called "Add New Type" that should open up a new text-type-input
-            to create a new type.
-          */}
+						{!props.otherType ? (
+							// NOT A DIFFERENT TYPE
+							<select
+								onChange={props.handleChange}
+								name='type'
+								value={props.newItemState.type}
+							>
+								{selectOptions}
+								<option value='Other'>Other</option>
+							</select>
+						) : (
+							// A DIFFERENT TYPE
+							<input
+								name='type'
+								id='add-item-name'
+								type='text'
+								value={props.newItemState.type}
+								onChange={props.handleChange}
+							/>
+						)}
 					</section>
 
 					<section className='add-item-section'>
 						<label htmlFor='add-item-name'>COUNT: </label>
 						<input
 							name='count'
+							min={1}
 							id='add-item-name'
 							type='number'
 							value={props.newItemState.count}
