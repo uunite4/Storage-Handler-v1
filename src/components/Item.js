@@ -7,12 +7,14 @@ export default function Item(props) {
 				<img src={props.img} alt='' />
 				{props.showAction && (
 					<>
-						<span className='item-action item-edit-btn'>EDIT</span>
+						<span className='item-action item-edit-btn'>
+							<span className='material-symbols-outlined'>edit</span>
+						</span>
 						<span
 							onClick={() => props.delItem(props.id)}
 							className='item-action item-dele-btn'
 						>
-							DELETE
+							<span className='material-symbols-outlined'>delete</span>
 						</span>
 						<span
 							onClick={() => {

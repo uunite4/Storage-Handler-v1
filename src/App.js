@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid'
 
+import DefaultItems from './DefaultItems'
+
 import Nav from './components/Nav'
 import Search from './components/Search'
 import Main from './components/Main'
@@ -10,7 +12,7 @@ export default function App() {
 	const penImg =
 		'https://images.unsplash.com/photo-1585997631913-896180ae8acb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
 
-	const [items, setItems] = useState(DefaultItems())
+	const [items, setItems] = useState(DefaultItems)
 	const [shownItems, setShownitems] = useState(items)
 	const [page, setPage] = useState('Main')
 	const [newItem, setNewItem] = useState({
@@ -23,12 +25,25 @@ export default function App() {
 	const [newItemDiffType, setNewItemDiffType] = useState(false)
 	const [actionBtns, setActionBtns] = useState(true)
 	const [types, setTypes] = useState(RemoveTypesDuplicates)
+	const [typeFilter, setTypeFilter] = useState('All')
 
 	//EVERY TIME items IS CHANGED, SHOWD ITEMS AND TYPES SHOULD CHANGE TOO
 	useEffect(() => {
 		setShownitems(items)
 		setTypes(RemoveTypesDuplicates())
 	}, [items])
+
+	useEffect(() => {
+		if (typeFilter == 'All') {
+			setShownitems(items)
+		} else {
+			setShownitems(
+				items.filter((item) => {
+					return item.type == typeFilter
+				})
+			)
+		}
+	}, [typeFilter])
 
 	// TYPES FUNCTIONS
 	function GetAllTypes() {
@@ -44,26 +59,6 @@ export default function App() {
 			(type, index) => mainTypes.indexOf(type) === index
 		)
 		return newArr
-	}
-
-	// GENERATE AN ITEM
-	function DefaultItems() {
-		let newItems = []
-		for (let i = 0; i < 2; i++) {
-			newItems.push(CreateNewItem())
-		}
-
-		return newItems
-	}
-
-	function CreateNewItem() {
-		return {
-			img: penImg,
-			name: 'pen',
-			type: 'office supply',
-			count: 10,
-			id: nanoid(),
-		}
 	}
 
 	//BACK TO MAIN PAGE FUNCTION
@@ -123,13 +118,19 @@ export default function App() {
 		})
 	}
 
-	// ADD -1 COUNT
+	// SUBTRACT 1 COUNT
 	function SubCount(id) {
 		setItems((prev) => {
 			return prev.map((item) => {
 				return item.id === id ? { ...item, count: item.count - 1 } : { ...item }
 			})
 		})
+	}
+
+	// TYPE FILTER ONCHANGE
+	function TypeFilterChange(e) {
+		const { value } = e.target
+		setTypeFilter(value)
 	}
 
 	return (
@@ -141,7 +142,11 @@ export default function App() {
 			/>
 			{page == 'Main' && (
 				<>
-					<Search />
+					<Search
+						typeFilterState={typeFilter}
+						typeFilerChange={TypeFilterChange}
+						types={types}
+					/>
 					<div className='seperator'></div>
 					<Main
 						showAction={actionBtns}

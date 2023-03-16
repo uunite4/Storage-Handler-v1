@@ -29,6 +29,12 @@ body {
 	background: #0eacd4;
 }
 
+/* SELECTION */
+
+::selection {
+	background-color: #0c0c0c;
+}
+
 /* NAVBAR */
 nav {
 	position: relative;
@@ -73,7 +79,8 @@ nav {
 
 	transition: inherit;
 
-	background-color: #088eaf;
+	background-color: #212121;
+	border: 2px solid white;
 }
 
 .action-toggle-handle {
@@ -100,21 +107,22 @@ nav {
 /* SEARCH */
 
 .search {
-	height: 15vh;
+	height: 25vh;
 	width: 100vw;
 	background-color: #212121;
-	display: grid;
-	place-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .search-cont {
 	display: flex;
-	height: 50%;
+	height: 20%;
 	width: 50%;
+	margin: 2em 0em 0em 0em;
 }
 
 .search-btn {
-	padding: 0;
 	height: 100%;
 	aspect-ratio: 1 / 1;
 	border: none;
@@ -144,6 +152,55 @@ nav {
 .search-input:focus {
 	outline: none;
 	background-color: #a5dbe9;
+}
+
+/* FILTERS */
+
+.filters-cont-wrapper {
+	margin: 1em;
+	flex: auto;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.filters-title {
+	font-size: 3rem;
+	margin: 0;
+	color: #0eacd4;
+}
+
+.filters-cont {
+	flex: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+}
+
+.types-filter {
+	display: flex;
+	gap: 1em;
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: white;
+}
+
+.types-filter select {
+	font-size: inherit;
+	font-weight: inherit;
+	background-color: white;
+	border: none;
+}
+
+.types-filter select option {
+	border: none;
+	outline: none;
+}
+
+.types-filter select:focus {
+	outline: none;
 }
 
 /* SEPERATOR */
@@ -188,7 +245,7 @@ nav {
 .item-img img {
 	width: 100%;
 	height: 100%;
-	object-fit: fill;
+	object-fit: cover;
 
 	transition: 200ms;
 }
