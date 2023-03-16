@@ -185,6 +185,7 @@ nav {
 	font-size: 1.2rem;
 	font-weight: 700;
 	color: white;
+	align-items: center;
 }
 
 .types-filter select {
@@ -192,6 +193,7 @@ nav {
 	font-weight: inherit;
 	background-color: white;
 	border: none;
+	padding: 0.2em;
 }
 
 .types-filter select option {

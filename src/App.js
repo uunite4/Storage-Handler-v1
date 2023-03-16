@@ -30,10 +30,18 @@ export default function App() {
 	//EVERY TIME items IS CHANGED, SHOWD ITEMS AND TYPES SHOULD CHANGE TOO
 	useEffect(() => {
 		setShownitems(items)
+		ShownItems()
 		setTypes(RemoveTypesDuplicates())
+
+		// CHECK FOR ITEMS WITH COUNT 0
 	}, [items])
 
+	// CHNAGE SHOWN ITEMS TO TYPE FILTER
 	useEffect(() => {
+		ShownItems()
+	}, [typeFilter])
+
+	function ShownItems() {
 		if (typeFilter == 'All') {
 			setShownitems(items)
 		} else {
@@ -43,7 +51,7 @@ export default function App() {
 				})
 			)
 		}
-	}, [typeFilter])
+	}
 
 	// TYPES FUNCTIONS
 	function GetAllTypes() {
@@ -124,6 +132,12 @@ export default function App() {
 			return prev.map((item) => {
 				return item.id === id ? { ...item, count: item.count - 1 } : { ...item }
 			})
+		})
+
+		items.forEach((item) => {
+			if (item.id == id && item.count == 1) {
+				DeleteItem(id)
+			}
 		})
 	}
 
