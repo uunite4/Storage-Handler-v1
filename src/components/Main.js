@@ -17,6 +17,7 @@ export default function Main(props) {
 				addCount={props.addCount}
 				subCount={props.subCount}
 				showAction={props.showAction}
+				edititem={props.edititem}
 			/>
 		)
 	})

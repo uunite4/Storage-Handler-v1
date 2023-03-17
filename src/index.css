@@ -228,7 +228,7 @@ nav {
 
 /* ITEM */
 .item {
-	width: calc(100vw / 7 - 2.3em);
+	width: 14em;
 	height: 17em;
 
 	display: flex;
@@ -345,7 +345,7 @@ nav {
 /* ADD ITEM */
 
 .add-item-card {
-	width: calc(100vw / 7 - 2.3em);
+	width: 14em;
 	height: 17em;
 
 	display: flex;

@@ -8,7 +8,12 @@ export default function Item(props) {
 				{props.showAction && (
 					<>
 						<span className='item-action item-edit-btn'>
-							<span className='material-symbols-outlined'>edit</span>
+							<span
+								onClick={() => props.edititem(props.id)}
+								className='material-symbols-outlined'
+							>
+								edit
+							</span>
 						</span>
 						<span
 							onClick={() => props.delItem(props.id)}

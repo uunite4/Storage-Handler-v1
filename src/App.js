@@ -7,25 +7,29 @@ import Nav from './components/Nav'
 import Search from './components/Search'
 import Main from './components/Main'
 import Add from './components/Add'
+import Edit from './components/Edit'
 
 export default function App() {
 	const penImg =
 		'https://images.unsplash.com/photo-1585997631913-896180ae8acb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
 
-	const [items, setItems] = useState(DefaultItems)
-	const [shownItems, setShownitems] = useState(items)
-	const [page, setPage] = useState('Main')
+	const [items, setItems] = useState(DefaultItems) // list of all items
+	const [shownItems, setShownitems] = useState(items) // list of items that are shown
+	const [page, setPage] = useState('Main') // page name
 	const [newItem, setNewItem] = useState({
+		// add new item object
 		img: '',
 		name: '',
 		type: 'General',
 		count: 1,
 		id: nanoid(),
 	})
-	const [newItemDiffType, setNewItemDiffType] = useState(false)
-	const [actionBtns, setActionBtns] = useState(true)
-	const [types, setTypes] = useState(RemoveTypesDuplicates)
-	const [typeFilter, setTypeFilter] = useState('All')
+	const [itemDiffType, setItemDiffType] = useState(false) // check if the new item's type is a new type or not
+	const [actionBtns, setActionBtns] = useState(true) // show action buttons
+	const [types, setTypes] = useState(RemoveTypesDuplicates) // list of all types created
+	const [typeFilter, setTypeFilter] = useState('All') // the type that is shown to the user
+	const [editItem, setEditItem] = useState(null) // edit existing item object
+	const [editId, setEditId] = useState('')
 
 	//EVERY TIME items IS CHANGED, SHOWD ITEMS AND TYPES SHOULD CHANGE TOO
 	useEffect(() => {
@@ -79,12 +83,25 @@ export default function App() {
 		setPage('Add')
 	}
 
+	//Edit ITEM PAGE FUNCTION
+	function EditPage(id) {
+		let editedItem
+		items.forEach((item) => {
+			if (item.id == id) {
+				editedItem = item
+			}
+		})
+		setEditItem(editedItem)
+		setEditId(id)
+		setPage('Edit')
+	}
+
 	//ADD NEW ITEM INPUTS FUNCTION
 	function AddNewItemInputs(e) {
 		const { name, value, type, files } = e.target
 		if (type == 'select-one' && value == 'Other') {
 			//Handle the type feature thing
-			setNewItemDiffType(true)
+			setItemDiffType(true)
 			setNewItem((prev) => ({ ...prev, type: '' }))
 		} else {
 			setNewItem((prev) => ({
@@ -100,11 +117,51 @@ export default function App() {
 		if (newItem.name && newItem.type && newItem.count > 0) {
 			setItems((prev) => [newItem, ...prev])
 			setNewItem({ img: '', name: '', type: 'General', count: 1, id: nanoid() })
-			setNewItemDiffType(false)
+			setItemDiffType(false)
 			BackToMain()
 		} else {
 			alert('You should have a: name, type and at least one of this new item')
 		}
+	}
+
+	// EDIT ITEM INPUTS FUNCTION
+	function EditItemInputs(e) {
+		const { name, value, type, files } = e.target
+		if (type == 'select-one' && value == 'Other') {
+			//Handle the type feature thing
+			setItemDiffType(true)
+			setEditItem((prev) => ({ ...prev, type: '' }))
+		} else {
+			setEditItem((prev) => ({
+				...prev,
+				[name]: type == 'file' ? URL.createObjectURL(files[0]) : value,
+			}))
+		}
+	}
+
+	// SAVE EDITED ITEM
+	function SaveEditedItem(e, id) {
+		e.preventDefault()
+		if (editItem.name && editItem.type && editItem.count > 0) {
+			setItems(
+				items.map((item) => {
+					if (item.id == id) {
+						return editItem
+					} else {
+						return { ...item }
+					}
+				})
+			)
+			setEditItem(null)
+			setItemDiffType(false)
+			BackToMain()
+		} else {
+			alert('You should have a: name, type and at least one of this new item')
+		}
+	}
+
+	function test(e) {
+		console.log(editItem)
 	}
 
 	// TOGGLE ACTION BUTTONS
@@ -134,6 +191,7 @@ export default function App() {
 			})
 		})
 
+		// CHECK IF THE ITEM'S COUNT IS 0
 		items.forEach((item) => {
 			if (item.id == id && item.count == 1) {
 				DeleteItem(id)
@@ -169,6 +227,7 @@ export default function App() {
 						subCount={SubCount}
 						items={shownItems}
 						addItem={AddPage}
+						edititem={EditPage}
 					/>
 				</>
 			)}
@@ -181,7 +240,21 @@ export default function App() {
 						defPenImg={penImg}
 						submitFunc={SubmitNewItem}
 						typesList={types}
-						otherType={newItemDiffType}
+						otherType={itemDiffType}
+					/>
+				</>
+			)}
+			{page == 'Edit' && (
+				<>
+					<Edit
+						typesList={types}
+						otherType={itemDiffType}
+						editItemState={editItem}
+						backToMain={BackToMain}
+						handleChange={EditItemInputs}
+						saveItem={SaveEditedItem}
+						test={test}
+						id={editId}
 					/>
 				</>
 			)}
