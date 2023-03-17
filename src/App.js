@@ -29,23 +29,29 @@ export default function App() {
 	const [types, setTypes] = useState(RemoveTypesDuplicates) // list of all types created
 	const [typeFilter, setTypeFilter] = useState('All') // the type that is shown to the user
 	const [editItem, setEditItem] = useState(null) // edit existing item object
-	const [editId, setEditId] = useState('')
+	const [editId, setEditId] = useState('') // current edited item id
+	const [search, setSearch] = useState('') // search input
 
-	//EVERY TIME items IS CHANGED, SHOWD ITEMS AND TYPES SHOULD CHANGE TOO
+	//EVERY TIME ITEMS IS CHANGED, SHOWD ITEMS AND TYPES SHOULD CHANGE TOO
 	useEffect(() => {
 		setShownitems(items)
-		ShownItems()
+		TypeFilterCheck()
+		CheckSearch()
 		setTypes(RemoveTypesDuplicates())
 
 		// CHECK FOR ITEMS WITH COUNT 0
 	}, [items])
 
-	// CHNAGE SHOWN ITEMS TO TYPE FILTER
+	// CHANGE SHOWN ITEMS WHEN TYPE FILTER OR SEARCH CHANGES
 	useEffect(() => {
-		ShownItems()
+		CheckSearch()
+	}, [search])
+
+	useEffect(() => {
+		TypeFilterCheck()
 	}, [typeFilter])
 
-	function ShownItems() {
+	function TypeFilterCheck() {
 		if (typeFilter == 'All') {
 			setShownitems(items)
 		} else {
@@ -54,6 +60,20 @@ export default function App() {
 					return item.type == typeFilter
 				})
 			)
+		}
+	}
+
+	function CheckSearch() {
+		if (search.length > 0) {
+			let searchRes = []
+			items.forEach((item) => {
+				if (item.name.startsWith(search)) {
+					searchRes.push(item)
+				}
+			})
+			setShownitems(searchRes)
+		} else {
+			TypeFilterCheck()
 		}
 	}
 
@@ -160,10 +180,6 @@ export default function App() {
 		}
 	}
 
-	function test(e) {
-		console.log(editItem)
-	}
-
 	// TOGGLE ACTION BUTTONS
 	function ToggleActionBtns() {
 		setActionBtns((prev) => !prev)
@@ -205,6 +221,12 @@ export default function App() {
 		setTypeFilter(value)
 	}
 
+	// SEARCH CHANGE
+	function SearchChange(e) {
+		const { value } = e.target
+		setSearch(value)
+	}
+
 	return (
 		<>
 			<Nav
@@ -218,6 +240,8 @@ export default function App() {
 						typeFilterState={typeFilter}
 						typeFilerChange={TypeFilterChange}
 						types={types}
+						searchChange={SearchChange}
+						searchState={search}
 					/>
 					<div className='seperator'></div>
 					<Main

@@ -16,7 +16,12 @@ export default function Search(props) {
 		<section className='search'>
 			<div className='search-cont'>
 				<button className='search-btn'></button>
-				<input className='search-input' type='text' />
+				<input
+					onChange={props.searchChange}
+					className='search-input'
+					type='text'
+					value={props.searchState}
+				/>
 			</div>
 			<div className='filters-cont-wrapper'>
 				<h1 className='filters-title'>FILTERS</h1>

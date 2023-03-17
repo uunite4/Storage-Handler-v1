@@ -29,12 +29,6 @@ body {
 	background: #0eacd4;
 }
 
-/* SELECTION */
-
-::selection {
-	background-color: #0c0c0c;
-}
-
 /* NAVBAR */
 nav {
 	position: relative;
