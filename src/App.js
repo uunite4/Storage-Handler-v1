@@ -277,7 +277,6 @@ export default function App() {
 						backToMain={BackToMain}
 						handleChange={EditItemInputs}
 						saveItem={SaveEditedItem}
-						test={test}
 						id={editId}
 					/>
 				</>

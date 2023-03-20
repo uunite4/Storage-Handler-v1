@@ -76,7 +76,6 @@ export default function Add(props) {
 
 					<input
 						onClick={(e) => props.saveItem(e, props.id)}
-						// onClick={props.test}
 						type='submit'
 						value='SAVE ITEM'
 					/>
